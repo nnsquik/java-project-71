@@ -30,7 +30,7 @@ public class Differ {
             if (isFirstFile && isSecondFile) {
                 if (data1.get(key).equals(data2.get(key))) {
                     // ключ в обоих файлах и значения одинаковы
-                    result.append("  " + key + ": " + data1.get(key) + "\n");
+                    result.append("    " + key + ": " + data1.get(key) + "\n");
                 } else {
                     // ключ в обоих файлах и значения разные
                     result.append("  - " + key + ": " + data1.get(key) + "\n");
