@@ -29,8 +29,7 @@ public final class App implements Runnable {
         try {
             Map<String, Object> data1 = parseJson(filepath1);
             Map<String, Object> data2 = parseJson(filepath2);
-            System.out.println("File 1: " + data1);
-            System.out.println("File 2: " + data2);
+            System.out.println(Differ.generate(data1, data2));
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
