@@ -2,9 +2,6 @@ package hexlet.code;
 
 import picocli.CommandLine;
 
-import java.util.List;
-import java.util.Map;
-
 @CommandLine.Command(name = "gendiff", mixinStandardHelpOptions = true,
         description = "Compares two configuration files and shows a difference.")
 public final class App implements Runnable {
@@ -25,10 +22,8 @@ public final class App implements Runnable {
     @Override
     public void run() {
         try {
-            Map<String, Object> data1 = Parser.parse(filepath1);
-            Map<String, Object> data2 = Parser.parse(filepath2);
-            List<DiffNode> diffNodes = Differ.generate(data1, data2);
-            System.out.println(Formatter.stylish(diffNodes));
+
+            System.out.println(Differ.generate(filepath1, filepath2, format));
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }

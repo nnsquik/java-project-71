@@ -1,9 +1,10 @@
 package hexlet.code;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Differ {
-    public static List<DiffNode> generate(Map<String, Object> data1, Map<String, Object> data2) {
+    public static List<DiffNode> buildDiff(Map<String, Object> data1, Map<String, Object> data2) {
         List<String> allKeys = new ArrayList<>();
 
         for (String key : data1.keySet()) {
@@ -41,5 +42,16 @@ public class Differ {
         }
 
         return diffNodes;
+    }
+
+    public static String generate(String filepath1, String filepath2, String format) throws Exception {
+        Map<String, Object> data1 = Parser.parse(filepath1);
+        Map<String, Object> data2 = Parser.parse(filepath2);
+        List<DiffNode> diff = buildDiff(data1, data2);
+        return Formatter.format(diff, format);
+    }
+
+    public static String generate(String filepath1, String filepath2) throws Exception {
+        return generate(filepath1, filepath2, "stylish");
     }
 }

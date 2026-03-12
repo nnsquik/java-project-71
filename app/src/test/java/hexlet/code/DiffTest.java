@@ -14,9 +14,6 @@ public class DiffTest {
 
     @Test
     public void testGenerateJson() throws Exception {
-        Map<String, Object> data1 = Parser.parse(getFilePath("file1.json"));
-        Map<String, Object> data2 = Parser.parse(getFilePath("file2.json"));
-
         String expected = "{\n"
                 + "  - follow: false\n"
                 + "    host: hexlet.io\n"
@@ -26,15 +23,11 @@ public class DiffTest {
                 + "  + verbose: true\n"
                 + "}";
 
-        List<DiffNode> diff = Differ.generate(data1, data2);
-        assertEquals(expected, Formatter.stylish(diff));
+        assertEquals(expected, Differ.generate(getFilePath("file1.json"), getFilePath("file2.json")));
     }
 
     @Test
     public void testGenerateYaml() throws Exception {
-        Map<String, Object> data1 = Parser.parse(getFilePath("file1.yml"));
-        Map<String, Object> data2 = Parser.parse(getFilePath("file2.yml"));
-
         String expected = "{\n"
                 + "  - follow: false\n"
                 + "    host: hexlet.io\n"
@@ -44,16 +37,12 @@ public class DiffTest {
                 + "  + verbose: true\n"
                 + "}";
 
-        List<DiffNode> diff = Differ.generate(data1, data2);
-        assertEquals(expected, Formatter.stylish(diff));
+        assertEquals(expected, Differ.generate(getFilePath("file1.yml"), getFilePath("file2.yml")));
     }
 
     @Test
     public void testGenerateNested() throws Exception {
-        Map<String, Object> data1 = Parser.parse(getFilePath("file1-nested.json"));
-        Map<String, Object> data2 = Parser.parse(getFilePath("file2-nested.json"));
-
-        String expected = "{\n"
+       String expected = "{\n"
                 + "    chars1: [a, b, c]\n"
                 + "  - chars2: [d, e, f]\n"
                 + "  + chars2: false\n"
@@ -79,15 +68,11 @@ public class DiffTest {
                 + "  + setting3: none\n"
                 + "}";
 
-        List<DiffNode> diff = Differ.generate(data1, data2);
-        assertEquals(expected, Formatter.stylish(diff));
+        assertEquals(expected, Differ.generate(getFilePath("file1-nested.json"), getFilePath("file2-nested.json")));
     }
 
     @Test
     public void testGenerateNestedYaml() throws Exception {
-        Map<String, Object> data1 = Parser.parse(getFilePath("file1-nested.yml"));
-        Map<String, Object> data2 = Parser.parse(getFilePath("file2-nested.yml"));
-
         String expected = "{\n"
                 + "    chars1: [a, b, c]\n"
                 + "  - chars2: [d, e, f]\n"
@@ -114,7 +99,25 @@ public class DiffTest {
                 + "  + setting3: none\n"
                 + "}";
 
-        List<DiffNode> diff = Differ.generate(data1, data2);
-        assertEquals(expected, Formatter.stylish(diff));
+        assertEquals(expected, Differ.generate(getFilePath("file1-nested.yml"), getFilePath("file2-nested.yml")));
+    }
+
+    @Test
+    public void testGeneratePlain() throws Exception {
+        String expected = "Property 'chars2' was updated. From [complex value] to false\n"
+                + "Property 'checked' was updated. From false to true\n"
+                + "Property 'default' was updated. From null to [complex value]\n"
+                + "Property 'id' was updated. From 45 to null\n"
+                + "Property 'key1' was removed\n"
+                + "Property 'key2' was added with value: 'value2'\n"
+                + "Property 'numbers2' was updated. From [complex value] to [complex value]\n"
+                + "Property 'numbers3' was removed\n"
+                + "Property 'numbers4' was added with value: [complex value]\n"
+                + "Property 'obj1' was added with value: [complex value]\n"
+                + "Property 'setting1' was updated. From 'Some value' to 'Another value'\n"
+                + "Property 'setting2' was updated. From 200 to 300\n"
+                + "Property 'setting3' was updated. From true to 'none'";
+
+        assertEquals(expected, Differ.generate(getFilePath("file1-nested.json"), getFilePath("file2-nested.json"), "plain"));
     }
 }

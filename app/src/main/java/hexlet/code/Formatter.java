@@ -1,33 +1,19 @@
 package hexlet.code;
 
+import hexlet.code.formatters.Plain;
+import hexlet.code.formatters.Stylish;
+
 import java.util.List;
 
 public class Formatter {
-    public static String stylish(List<DiffNode> diffNodes) {
-        StringBuilder result = new StringBuilder();
-        result.append("{\n");
-
-        for (DiffNode diffNode : diffNodes) {
-            switch (diffNode.getType()) {
-                case "unchanged":
-                    result.append("    " + diffNode.getKey() + ": " + diffNode.getOldValue() + "\n");
-                    break;
-                case "changed":
-                    result.append("  - " + diffNode.getKey() + ": " + diffNode.getOldValue() + "\n");
-                    result.append("  + " + diffNode.getKey() + ": " + diffNode.getNewValue() + "\n");
-                    break;
-                case "removed":
-                    result.append("  - " + diffNode.getKey() + ": " + diffNode.getOldValue() + "\n");
-                    break;
-                case "added":
-                    result.append("  + " + diffNode.getKey() + ": " + diffNode.getNewValue() + "\n");
-                    break;
-                default:
-                    break;
-            }
+    public static String format(List<DiffNode> diff, String formatName) throws Exception {
+        switch (formatName) {
+            case "stylish":
+                return Stylish.format(diff);
+            case "plain":
+                return Plain.format(diff);
+            default:
+                throw new Exception("Unknown format: " + formatName);
         }
-
-        result.append("}");
-        return result.toString();
     }
 }
