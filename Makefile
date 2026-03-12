@@ -11,3 +11,9 @@ diff-json:
 
 diff-yml:
 	./app/build/install/app/bin/app app/src/test/resources/file1.yml app/src/test/resources/file2.yml
+
+diff-nested-json:
+	./app/build/install/app/bin/app app/src/test/resources/file1-nested.json app/src/test/resources/file2-nested.json
+
+diff-nested-yml:
+	./app/build/install/app/bin/app app/src/test/resources/file1-nested.yml app/src/test/resources/file2-nested.yml

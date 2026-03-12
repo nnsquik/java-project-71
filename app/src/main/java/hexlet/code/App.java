@@ -2,6 +2,7 @@ package hexlet.code;
 
 import picocli.CommandLine;
 
+import java.util.List;
 import java.util.Map;
 
 @CommandLine.Command(name = "gendiff", mixinStandardHelpOptions = true,
@@ -26,7 +27,8 @@ public final class App implements Runnable {
         try {
             Map<String, Object> data1 = Parser.parse(filepath1);
             Map<String, Object> data2 = Parser.parse(filepath2);
-            System.out.println(Differ.generate(data1, data2));
+            List<DiffNode> diffNodes = Differ.generate(data1, data2);
+            System.out.println(Formatter.stylish(diffNodes));
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }

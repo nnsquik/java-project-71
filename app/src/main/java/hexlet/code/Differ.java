@@ -1,12 +1,9 @@
 package hexlet.code;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Differ {
-    public static String generate(Map<String, Object> data1, Map<String, Object> data2) {
+    public static List<DiffNode> generate(Map<String, Object> data1, Map<String, Object> data2) {
         List<String> allKeys = new ArrayList<>();
 
         for (String key : data1.keySet()) {
@@ -20,32 +17,29 @@ public class Differ {
         }
 
         Collections.sort(allKeys);
-        StringBuilder result = new StringBuilder();
-        result.append("{\n");
+        List<DiffNode> diffNodes = new ArrayList<>();
 
         for (String key : allKeys) {
             boolean isFirstFile = data1.containsKey(key);
             boolean isSecondFile = data2.containsKey(key);
 
             if (isFirstFile && isSecondFile) {
-                if (data1.get(key).equals(data2.get(key))) {
-                    // ключ в обоих файлах и значения одинаковы
-                    result.append("    " + key + ": " + data1.get(key) + "\n");
+                if (Objects.equals(data1.get(key), data2.get(key))) {
+                    // ключ и значения одинаковы
+                    diffNodes.add(new DiffNode(key, data1.get(key), data2.get(key), "unchanged"));
                 } else {
-                    // ключ в обоих файлах и значения разные
-                    result.append("  - " + key + ": " + data1.get(key) + "\n");
-                    result.append("  + " + key + ": " + data2.get(key) + "\n");
+                    // ключ и значения разные
+                    diffNodes.add(new DiffNode(key, data1.get(key), data2.get(key), "changed"));
                 }
             } else if (isFirstFile) {
-                // ключ удален только в 1 файле
-                result.append("  - " + key + ": " + data1.get(key) + "\n");
+                // ключ удален
+                diffNodes.add(new DiffNode(key, data1.get(key), null, "removed"));
             } else {
-                // ключ добавлен только во 2 файле
-                result.append("  + " + key + ": " + data2.get(key) + "\n");
+                // ключ добавлен
+                diffNodes.add(new DiffNode(key,null, data2.get(key), "added"));
             }
         }
 
-        result.append("}");
-        return result.toString();
+        return diffNodes;
     }
 }

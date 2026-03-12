@@ -28,3 +28,6 @@ make diff-yml       # запуск с тестовыми YAML файлами
 
 ## Example: diff-yml
 [![asciicast](https://asciinema.org/a/Uvc3ftQDJPQ1xQbk.svg)](https://asciinema.org/a/Uvc3ftQDJPQ1xQbk)
+
+## Example: diff-nested-yml, diff-nested-json
+[![asciicast](https://asciinema.org/a/Tq5Wd5JSsC8oLmBc.svg)](https://asciinema.org/a/Tq5Wd5JSsC8oLmBc)
