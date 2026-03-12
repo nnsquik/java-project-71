@@ -12,4 +12,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - name: Build with Gradle
-        run: cd app && ../gradlew build
+        run: |
+          chmod +x gradlew
+          ./gradlew build
+          working-directory: app
