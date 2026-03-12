@@ -1,6 +1,11 @@
 package hexlet.code;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import picocli.CommandLine;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map;
 
 @CommandLine.Command(name = "gendiff", mixinStandardHelpOptions = true,
         description = "Compares two configuration files and shows a difference.")
@@ -19,7 +24,21 @@ public class App implements Runnable {
         new CommandLine(new App()).execute(args);
     }
 
+    @Override
     public void run() {
-        System.out.println("Hello World!");
+        try {
+            Map<String, Object> data1 = parseJson(filepath1);
+            Map<String, Object> data2 = parseJson(filepath2);
+            System.out.println("File 1: " + data1);
+            System.out.println("File 2: " + data2);
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+
+    public static Map<String, Object> parseJson(String filepath) throws Exception {
+        String content = Files.readString(Paths.get(filepath).toAbsolutePath().normalize());
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(content, Map.class);
     }
 }
