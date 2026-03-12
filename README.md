@@ -17,9 +17,14 @@ cd java-project-71
 
 # Make commands
 ```bash
-make run-dist # запуск приложения
-make diff     # запуск с тестовыми файлами
+make build          # сборка проекта
+make run-dist       # запуск приложения
+make diff-json      # запуск с тестовыми JSON файлами
+make diff-yml       # запуск с тестовыми YAML файлами
 ```
 
-## Example
+## Example: diff-json
 [![asciicast](https://asciinema.org/a/hBiexbkxsw3vXU26.svg)](https://asciinema.org/a/hBiexbkxsw3vXU26)
+
+## Example: diff-yml
+[![asciicast](https://asciinema.org/a/Uvc3ftQDJPQ1xQbk.svg)](https://asciinema.org/a/Uvc3ftQDJPQ1xQbk)
