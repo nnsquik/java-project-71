@@ -9,6 +9,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
     checkstyle
+    id("org.sonarqube") version "7.2.3.7755"
 }
 
 repositories {
@@ -49,4 +50,11 @@ tasks.named<Test>("test") {
 
 checkstyle {
     configFile = file("config/checkstyle/checkstyle.xml")
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "nnsquik_java-project-71")
+        property("sonar.organization", "nnsquik")
+    }
 }
