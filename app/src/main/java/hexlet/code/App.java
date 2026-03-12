@@ -1,10 +1,7 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import picocli.CommandLine;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 
 @CommandLine.Command(name = "gendiff", mixinStandardHelpOptions = true,
@@ -27,17 +24,11 @@ public final class App implements Runnable {
     @Override
     public void run() {
         try {
-            Map<String, Object> data1 = parseJson(filepath1);
-            Map<String, Object> data2 = parseJson(filepath2);
+            Map<String, Object> data1 = Parser.parse(filepath1);
+            Map<String, Object> data2 = Parser.parse(filepath2);
             System.out.println(Differ.generate(data1, data2));
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
-    }
-
-    public static Map<String, Object> parseJson(String filepath) throws Exception {
-        String content = Files.readString(Paths.get(filepath).toAbsolutePath().normalize());
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(content, Map.class);
     }
 }

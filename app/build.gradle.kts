@@ -29,6 +29,7 @@ dependencies {
     implementation("info.picocli:picocli:4.7.7")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.21.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.21.1")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
