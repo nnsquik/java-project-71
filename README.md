@@ -34,3 +34,6 @@ make diff-yml       # запуск с тестовыми YAML файлами
 
 ## Example: diff-plain
 [![asciicast](https://asciinema.org/a/bYovXjwvEUG0FTVQ.svg)](https://asciinema.org/a/bYovXjwvEUG0FTVQ)
+
+## Example: diff-json-format
+[![asciicast](https://asciinema.org/a/KaottqiwZwa76Z5T.svg)](https://asciinema.org/a/KaottqiwZwa76Z5T)

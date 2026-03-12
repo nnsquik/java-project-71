@@ -20,3 +20,6 @@ diff-nested-yml:
 
 diff-plain:
 	./app/build/install/app/bin/app -f plain app/src/test/resources/file1-nested.json app/src/test/resources/file2-nested.json
+
+diff-json-format:
+	./app/build/install/app/bin/app -f json app/src/test/resources/file1-nested.json app/src/test/resources/file2-nested.json

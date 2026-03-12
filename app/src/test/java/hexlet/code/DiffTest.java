@@ -2,10 +2,10 @@ package hexlet.code;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DiffTest {
     private String getFilePath(String fileName) {
@@ -23,7 +23,8 @@ public class DiffTest {
                 + "  + verbose: true\n"
                 + "}";
 
-        assertEquals(expected, Differ.generate(getFilePath("file1.json"), getFilePath("file2.json")));
+        assertEquals(expected, Differ.generate(getFilePath("file1.json"),
+                getFilePath("file2.json")));
     }
 
     @Test
@@ -37,7 +38,8 @@ public class DiffTest {
                 + "  + verbose: true\n"
                 + "}";
 
-        assertEquals(expected, Differ.generate(getFilePath("file1.yml"), getFilePath("file2.yml")));
+        assertEquals(expected, Differ.generate(getFilePath("file1.yml"),
+                getFilePath("file2.yml")));
     }
 
     @Test
@@ -68,7 +70,8 @@ public class DiffTest {
                 + "  + setting3: none\n"
                 + "}";
 
-        assertEquals(expected, Differ.generate(getFilePath("file1-nested.json"), getFilePath("file2-nested.json")));
+        assertEquals(expected, Differ.generate(getFilePath("file1-nested.json"),
+                getFilePath("file2-nested.json")));
     }
 
     @Test
@@ -99,7 +102,8 @@ public class DiffTest {
                 + "  + setting3: none\n"
                 + "}";
 
-        assertEquals(expected, Differ.generate(getFilePath("file1-nested.yml"), getFilePath("file2-nested.yml")));
+        assertEquals(expected, Differ.generate(getFilePath("file1-nested.yml"),
+                getFilePath("file2-nested.yml")));
     }
 
     @Test
@@ -118,6 +122,19 @@ public class DiffTest {
                 + "Property 'setting2' was updated. From 200 to 300\n"
                 + "Property 'setting3' was updated. From true to 'none'";
 
-        assertEquals(expected, Differ.generate(getFilePath("file1-nested.json"), getFilePath("file2-nested.json"), "plain"));
+        assertEquals(expected, Differ.generate(getFilePath("file1-nested.json"),
+                getFilePath("file2-nested.json"), "plain"));
+    }
+
+    @Test
+    public void testGenerateJsonFormat() throws Exception {
+        String result = Differ.generate(getFilePath("file1-nested.json"),
+                getFilePath("file2-nested.json"), "json");
+        System.out.println("result" + result);
+        assertNotNull(result);
+        assertTrue(result.contains("chars1"));
+        assertTrue(result.contains("setting1"));
+        assertTrue(result.contains("type"));
+        assertTrue(result.contains("key"));
     }
 }
