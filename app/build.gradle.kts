@@ -55,6 +55,6 @@ checkstyle {
 sonar {
     properties {
         property("sonar.projectKey", "nnsquik_java-project-71")
-        property("sonar.organization", "nnsquik")
+        property("sonar.organization", "nesquik")
     }
 }
