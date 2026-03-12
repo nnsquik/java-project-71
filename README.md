@@ -1,6 +1,8 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/nesquikpro/java-project-71/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/nesquikpro/java-project-71/actions)
 
+[![Java CI](https://github.com/nnsquik/java-project-71/actions/workflows/ci.yml/badge.svg)](https://github.com/nnsquik/java-project-71/actions/workflows/ci.yml)
+
 # Gendiff
 
 ## Description
