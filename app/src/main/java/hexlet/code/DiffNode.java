@@ -1,16 +1,16 @@
 package hexlet.code;
 
-public class DiffNode {
+public final class DiffNode {
     private final String key;
     private final Object oldValue;
     private final Object newValue;
     private final String type;
 
-    public DiffNode(String key, Object oldValue, Object newValue, String value) {
-        this.key = key;
-        this.oldValue = oldValue;
-        this.newValue = newValue;
-        this.type = value;
+    public DiffNode(String keyParm, Object oldValueParam, Object newValueParam, String typeParam) {
+        this.key = keyParm;
+        this.oldValue = oldValueParam;
+        this.newValue = newValueParam;
+        this.type = typeParam;
     }
 
     public String getKey() {

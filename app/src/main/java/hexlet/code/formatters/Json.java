@@ -6,7 +6,7 @@ import hexlet.code.DiffNode;
 import java.util.List;
 
 public class Json {
-    public static String format(List<DiffNode> diff) throws  Exception{
+    public static String format(List<DiffNode> diff) throws  Exception {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(diff);
     }

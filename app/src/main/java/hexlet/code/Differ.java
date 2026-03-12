@@ -1,7 +1,10 @@
 package hexlet.code;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class Differ {
     public static List<DiffNode> buildDiff(Map<String, Object> data1, Map<String, Object> data2) {
@@ -37,7 +40,7 @@ public class Differ {
                 diffNodes.add(new DiffNode(key, data1.get(key), null, "removed"));
             } else {
                 // ключ добавлен
-                diffNodes.add(new DiffNode(key,null, data2.get(key), "added"));
+                diffNodes.add(new DiffNode(key, null, data2.get(key), "added"));
             }
         }
 
