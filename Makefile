@@ -1,7 +1,10 @@
 .PHONY:	build
 
 build:
-	./gradlew build
+	cd app && ./gradlew build
+
+setup:
+	cd app && ./gradlew clean install
 
 run-dist:
 	./app/build/install/app/bin/app
