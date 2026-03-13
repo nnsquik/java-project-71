@@ -1,21 +1,12 @@
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
     application
     checkstyle
-    `maven-publish`
+    id("com.github.ben-manes.versions") version "0.53.0"
     id("org.sonarqube") version "7.2.3.7755"
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "hexlet.code"
-            artifactId = "app"
-            version = "1.0"
-            from(components["java"])
-        }
-    }
-}
+group = "hexlet.code"
+version = "1.0-SNAPSHOT"
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -47,6 +38,10 @@ java {
 application {
     // Define the main class for the application.
     mainClass = "hexlet.code.App"
+}
+
+tasks.getByName("run", JavaExec::class) {
+    standardInput = System.`in`
 }
 
 tasks.named<Test>("test") {
