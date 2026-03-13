@@ -44,7 +44,7 @@ public class DiffTest {
 
     @Test
     public void testGenerateNested() throws Exception {
-       String expected = "{\n"
+        String expected = "{\n"
                 + "    chars1: [a, b, c]\n"
                 + "  - chars2: [d, e, f]\n"
                 + "  + chars2: false\n"
