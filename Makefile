@@ -1,15 +1,18 @@
-.PHONY:	build
-
-build:
-	cd app && ./gradlew build
+.PHONY: build
 
 setup:
+	cd app && ./gradlew wrapper --gradle-version 9.4.0
+
+build:
+	cd app && ./gradlew clean build
+
+install:
 	cd app && ./gradlew clean install
 
 run-dist:
 	./app/build/install/app/bin/app
 
-diff-json:
+diff:
 	./app/build/install/app/bin/app app/src/test/resources/file1.json app/src/test/resources/file2.json
 
 diff-yml:
