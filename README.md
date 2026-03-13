@@ -17,10 +17,14 @@ cd java-project-71
 
 # Make commands
 ```bash
-make build          # сборка проекта
-make run-dist       # запуск приложения
-make diff-json      # запуск с тестовыми JSON файлами
-make diff-yml       # запуск с тестовыми YAML файлами
+make build                    # сборка проекта
+make run-dist                 # запуск приложения
+make diff-json                # запуск с тестовыми JSON файлами
+make diff-yml                 # запуск с тестовыми YAML файлами
+make diff-nested-json         # запуск с вложенными JSON файлами
+make diff-nested-yml          # запуск с вложенными YAML файлами
+make diff-plain               # запуск в plain формате
+make diff-json-format         # запуск в json формате
 ```
 
 ## Example: diff-json
