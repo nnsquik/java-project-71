@@ -27,8 +27,8 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Build and analyze
         run: |
-          chmod +x gradlew
-          ./gradlew build sonar --info
+          chmod +x app/gradlew
+          cd app && ./gradlew build sonar --info
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
