@@ -1,57 +1,34 @@
 package hexlet.code;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class Differ {
-    public static List<DiffNode> buildDiff(Map<String, Object> data1, Map<String, Object> data2) {
-        List<String> allKeys = new ArrayList<>();
-
-        for (String key : data1.keySet()) {
-            allKeys.add(key);
-        }
-
-        for (String key : data2.keySet()) {
-            if (!allKeys.contains(key)) {
-                allKeys.add(key);
-            }
-        }
-
-        Collections.sort(allKeys);
-        List<DiffNode> diffNodes = new ArrayList<>();
-
-        for (String key : allKeys) {
-            boolean isFirstFile = data1.containsKey(key);
-            boolean isSecondFile = data2.containsKey(key);
-
-            if (isFirstFile && isSecondFile) {
-                if (Objects.equals(data1.get(key), data2.get(key))) {
-                    // ключ и значения одинаковы
-                    diffNodes.add(new DiffNode(key, data1.get(key), data2.get(key), "unchanged"));
-                } else {
-                    // ключ и значения разные
-                    diffNodes.add(new DiffNode(key, data1.get(key), data2.get(key), "changed"));
-                }
-            } else if (isFirstFile) {
-                // ключ удален
-                diffNodes.add(new DiffNode(key, data1.get(key), null, "removed"));
-            } else {
-                // ключ добавлен
-                diffNodes.add(new DiffNode(key, null, data2.get(key), "added"));
-            }
-        }
-
-        return diffNodes;
-    }
 
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
-        Map<String, Object> data1 = Parser.parse(filepath1);
-        Map<String, Object> data2 = Parser.parse(filepath2);
-        List<DiffNode> diff = buildDiff(data1, data2);
+        String content1 = Files.readString(Paths.get(filepath1).toAbsolutePath().normalize());
+        String content2 = Files.readString(Paths.get(filepath2).toAbsolutePath().normalize());
+
+        String format1 = getFormat(filepath1);
+        String format2 = getFormat(filepath2);
+
+        Map<String, Object> data1 = Parser.parse(content1, format1);
+        Map<String, Object> data2 = Parser.parse(content2, format2);
+
+        List<DiffNode> diff = DiffBuilder.build(data1, data2);
         return Formatter.format(diff, format);
+    }
+
+    private static String getFormat(String filepath) throws Exception {
+        if (filepath.endsWith(".json")) {
+            return "json";
+        } else if (filepath.endsWith(".yml") || filepath.endsWith(".yaml")) {
+            return "yaml";
+        } else {
+            throw new RuntimeException("Invalid format: " + filepath + ". Supported formats: .json, .yaml, .yml");
+        }
     }
 
     public static String generate(String filepath1, String filepath2) throws Exception {

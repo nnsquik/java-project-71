@@ -19,7 +19,7 @@ public class Plain {
         }
     }
 
-    public static String format(List<DiffNode> diffNodes) {
+    public static String format(List<DiffNode> diffNodes) throws Exception {
         StringBuilder result = new StringBuilder();
 
         for (DiffNode diffNode : diffNodes) {
@@ -37,8 +37,10 @@ public class Plain {
                     result.append("Property '" + key + "' was added with value: "
                             + formatValue(diffNode.getNewValue()) + "\n");
                     break;
-                default:
+                case "unchanged":
                     break;
+                default:
+                    throw new RuntimeException("Unknown node type: " + diffNode.getType());
             }
         }
         return result.toString().trim();

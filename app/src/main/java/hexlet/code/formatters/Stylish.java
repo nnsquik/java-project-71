@@ -5,7 +5,7 @@ import hexlet.code.DiffNode;
 import java.util.List;
 
 public class Stylish {
-    public static String format(List<DiffNode> diffNodes) {
+    public static String format(List<DiffNode> diffNodes) throws Exception {
         StringBuilder result = new StringBuilder();
         result.append("{\n");
 
@@ -25,7 +25,7 @@ public class Stylish {
                     result.append("  + " + diffNode.getKey() + ": " + diffNode.getNewValue() + "\n");
                     break;
                 default:
-                    break;
+                    throw new RuntimeException("Unknown node type: " + diffNode.getType());
             }
         }
 

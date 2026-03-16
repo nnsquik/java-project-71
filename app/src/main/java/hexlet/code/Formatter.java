@@ -16,7 +16,8 @@ public class Formatter {
             case "json":
                 return Json.format(diff);
             default:
-                throw new Exception("Unknown format: " + formatName);
+                throw new RuntimeException("Unknown format: " + formatName
+                        + ". Supported formats: stylish, plain, json");
         }
     }
 }

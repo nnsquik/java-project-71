@@ -2,139 +2,78 @@ package hexlet.code;
 
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DiffTest {
     private String getFilePath(String fileName) {
         return "src/test/resources/" + fileName;
     }
 
+    private String readExpected(String fileName) throws Exception {
+        return Files.readString(Paths.get("src/test/resources/expected/" + fileName))
+                .trim();
+    }
+
     @Test
     public void testGenerateJson() throws Exception {
-        String expected = "{\n"
-                + "  - follow: false\n"
-                + "    host: hexlet.io\n"
-                + "  - proxy: 123.234.53.22\n"
-                + "  - timeout: 50\n"
-                + "  + timeout: 20\n"
-                + "  + verbose: true\n"
-                + "}";
-
-        assertEquals(expected, Differ.generate(getFilePath("file1.json"),
-                getFilePath("file2.json")));
+        assertEquals(readExpected("expected-stylish-flat.txt"),
+                Differ.generate(getFilePath("file1.json"), getFilePath("file2.json")));
     }
 
     @Test
     public void testGenerateYaml() throws Exception {
-        String expected = "{\n"
-                + "  - follow: false\n"
-                + "    host: hexlet.io\n"
-                + "  - proxy: 123.234.53.22\n"
-                + "  - timeout: 50\n"
-                + "  + timeout: 20\n"
-                + "  + verbose: true\n"
-                + "}";
-
-        assertEquals(expected, Differ.generate(getFilePath("file1.yml"),
-                getFilePath("file2.yml")));
+        assertEquals(readExpected("expected-stylish-flat.txt"),
+                Differ.generate(getFilePath("file1.yml"), getFilePath("file2.yml")));
     }
 
     @Test
-    public void testGenerateNested() throws Exception {
-        String expected = "{\n"
-                + "    chars1: [a, b, c]\n"
-                + "  - chars2: [d, e, f]\n"
-                + "  + chars2: false\n"
-                + "  - checked: false\n"
-                + "  + checked: true\n"
-                + "  - default: null\n"
-                + "  + default: [value1, value2]\n"
-                + "  - id: 45\n"
-                + "  + id: null\n"
-                + "  - key1: value1\n"
-                + "  + key2: value2\n"
-                + "    numbers1: [1, 2, 3, 4]\n"
-                + "  - numbers2: [2, 3, 4, 5]\n"
-                + "  + numbers2: [22, 33, 44, 55]\n"
-                + "  - numbers3: [3, 4, 5]\n"
-                + "  + numbers4: [4, 5, 6]\n"
-                + "  + obj1: {nestedKey=value, isNested=true}\n"
-                + "  - setting1: Some value\n"
-                + "  + setting1: Another value\n"
-                + "  - setting2: 200\n"
-                + "  + setting2: 300\n"
-                + "  - setting3: true\n"
-                + "  + setting3: none\n"
-                + "}";
-
-        assertEquals(expected, Differ.generate(getFilePath("file1-nested.json"),
-                getFilePath("file2-nested.json")));
+    public void testJsonToStylishDefault() throws Exception {
+        assertEquals(readExpected("expected-stylish.txt"),
+                Differ.generate(getFilePath("file1-nested.json"), getFilePath("file2-nested.json")));
     }
 
     @Test
-    public void testGenerateNestedYaml() throws Exception {
-        String expected = "{\n"
-                + "    chars1: [a, b, c]\n"
-                + "  - chars2: [d, e, f]\n"
-                + "  + chars2: false\n"
-                + "  - checked: false\n"
-                + "  + checked: true\n"
-                + "  - default: null\n"
-                + "  + default: [value1, value2]\n"
-                + "  - id: 45\n"
-                + "  + id: null\n"
-                + "  - key1: value1\n"
-                + "  + key2: value2\n"
-                + "    numbers1: [1, 2, 3, 4]\n"
-                + "  - numbers2: [2, 3, 4, 5]\n"
-                + "  + numbers2: [22, 33, 44, 55]\n"
-                + "  - numbers3: [3, 4, 5]\n"
-                + "  + numbers4: [4, 5, 6]\n"
-                + "  + obj1: {nestedKey=value, isNested=true}\n"
-                + "  - setting1: Some value\n"
-                + "  + setting1: Another value\n"
-                + "  - setting2: 200\n"
-                + "  + setting2: 300\n"
-                + "  - setting3: true\n"
-                + "  + setting3: none\n"
-                + "}";
-
-        assertEquals(expected, Differ.generate(getFilePath("file1-nested.yml"),
-                getFilePath("file2-nested.yml")));
+    public void testJsonToStylish() throws Exception {
+        assertEquals(readExpected("expected-stylish.txt"),
+                Differ.generate(getFilePath("file1-nested.json"), getFilePath("file2-nested.json"), "stylish"));
     }
 
     @Test
-    public void testGeneratePlain() throws Exception {
-        String expected = "Property 'chars2' was updated. From [complex value] to false\n"
-                + "Property 'checked' was updated. From false to true\n"
-                + "Property 'default' was updated. From null to [complex value]\n"
-                + "Property 'id' was updated. From 45 to null\n"
-                + "Property 'key1' was removed\n"
-                + "Property 'key2' was added with value: 'value2'\n"
-                + "Property 'numbers2' was updated. From [complex value] to [complex value]\n"
-                + "Property 'numbers3' was removed\n"
-                + "Property 'numbers4' was added with value: [complex value]\n"
-                + "Property 'obj1' was added with value: [complex value]\n"
-                + "Property 'setting1' was updated. From 'Some value' to 'Another value'\n"
-                + "Property 'setting2' was updated. From 200 to 300\n"
-                + "Property 'setting3' was updated. From true to 'none'";
-
-        assertEquals(expected, Differ.generate(getFilePath("file1-nested.json"),
-                getFilePath("file2-nested.json"), "plain"));
+    public void testJsonToPlain() throws Exception {
+        assertEquals(readExpected("expected-plain.txt"),
+                Differ.generate(getFilePath("file1-nested.json"), getFilePath("file2-nested.json"), "plain"));
     }
 
     @Test
-    public void testGenerateJsonFormat() throws Exception {
-        String result = Differ.generate(getFilePath("file1-nested.json"),
-                getFilePath("file2-nested.json"), "json");
-        System.out.println("result" + result);
-        assertNotNull(result);
-        assertTrue(result.contains("chars1"));
-        assertTrue(result.contains("setting1"));
-        assertTrue(result.contains("type"));
-        assertTrue(result.contains("key"));
+    public void testJsonToJson() throws Exception {
+        assertEquals(readExpected("expected-json.txt"),
+                Differ.generate(getFilePath("file1-nested.json"), getFilePath("file2-nested.json"), "json"));
+    }
+
+    @Test
+    public void testYamlToStylishDefault() throws Exception {
+        assertEquals(readExpected("expected-stylish.txt"),
+                Differ.generate(getFilePath("file1-nested.yml"), getFilePath("file2-nested.yml")));
+    }
+
+    @Test
+    public void testYamlToStylish() throws Exception {
+        assertEquals(readExpected("expected-stylish.txt"),
+                Differ.generate(getFilePath("file1-nested.yml"), getFilePath("file2-nested.yml"), "stylish"));
+    }
+
+    @Test
+    public void testYamlToPlain() throws Exception {
+        assertEquals(readExpected("expected-plain.txt"),
+                Differ.generate(getFilePath("file1-nested.yml"), getFilePath("file2-nested.yml"), "plain"));
+    }
+
+    @Test
+    public void testYamlToJson() throws Exception {
+        assertEquals(readExpected("expected-json.txt"),
+                Differ.generate(getFilePath("file1-nested.yml"), getFilePath("file2-nested.yml"), "json"));
     }
 }
