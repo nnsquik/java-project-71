@@ -16,7 +16,6 @@ public class Parser {
         } else if (format.equals("yml") || format.equals("yaml")) {
             YAMLMapper mapper = new YAMLMapper();
             return mapper.readValue(content, new TypeReference<Map<String, Object>>() {
-
             });
         } else {
             throw new RuntimeException("Unsupported format: " + format + ". Supported formats: json, yaml, yml");

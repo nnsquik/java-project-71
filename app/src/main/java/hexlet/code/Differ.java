@@ -21,14 +21,8 @@ public class Differ {
         return Formatter.format(diff, format);
     }
 
-    private static String getFormat(String filepath) throws Exception {
-        if (filepath.endsWith(".json")) {
-            return "json";
-        } else if (filepath.endsWith(".yml") || filepath.endsWith(".yaml")) {
-            return "yaml";
-        } else {
-            throw new RuntimeException("Invalid format: " + filepath + ". Supported formats: .json, .yaml, .yml");
-        }
+    private static String getFormat(String filepath) {
+        return filepath.substring(filepath.lastIndexOf('.') + 1);
     }
 
     public static String generate(String filepath1, String filepath2) throws Exception {
